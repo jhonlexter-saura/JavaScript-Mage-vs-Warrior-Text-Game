@@ -112,7 +112,6 @@ while (m.isAlive && w.isAlive) {
   
   getBothStatus();
   rerollAll();
-  healChance();
   battle();
   if (battle()) break;
 }
@@ -150,6 +149,7 @@ function battle() {
   }
   if (checkDeath(w, m))
     return true;
+  healChance();
   return false;
 }
 function checkDeath(attacker, defender) {
