@@ -101,7 +101,7 @@ class Warrior extends Hero {
     target.takeDamage(this.attackPower + bonusDamage);
   }
   getStatus() {
-    return super.getStatus() + `| Armor: ${this.armor} | Rage: ${this.rage}/100`;
+    return super.getStatus() + ` | Armor: ${this.armor} | Rage: ${this.rage}/100`;
   }
 }
 
