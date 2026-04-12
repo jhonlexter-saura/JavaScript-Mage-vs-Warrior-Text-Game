@@ -32,11 +32,11 @@ class Hero {
   
   heal(amount) {
     if(!this.isAlive) {
-      console.log(`${this.name} id already dead and cannot be healed`);
+      console.log(`${this.name} is already dead and cannot be healed`);
       return
     }
     this.health = Math.min(this.health + amount, this.maxHealth);
-    console.log(`${this.name} healed! Health; ${this.health}/${this.maxHealth}`);
+    console.log(`${this.name} healed! Health: ${this.health}/${this.maxHealth}`);
   }
   
   getStatus() {
@@ -105,21 +105,57 @@ class Warrior extends Hero {
   }
 }
 
-const m = new Mage("Nuwa", 100, 35);
+const m = new Mage("Nuwa", 125, 35);
 const w = new Warrior("Nezha", 150, 25);
 
 while (m.isAlive && w.isAlive) {
-  m.getStatus();
-  w.getStatus();
-  m.attack(w);
-  if (w.rage >= 30) {
-    w.powerStrike(m);
-  } else {
-    w.attack(m);
+  
+  getBothStatus();
+  rerollAll();
+  healChance();
+  battle();
+  if (battle()) break;
+}
+
+function reroll(target) {
+  target.probability = Math.floor(Math.random() * 3);
+}
+
+function rerollAll() {
+  reroll(w);
+  reroll(m);
+}
+
+function getBothStatus() {
+  console.log(m.getStatus());
+  console.log(w.getStatus());
+}
+
+function healChance() {
+  if (w.probability === 2) {
+  w.heal(Math.floor(10 + Math.random() * 35));
+} else if (m.probability === 1) {
+  m.heal(Math.floor(10 + Math.random() * 30))
   }
 }
-if (!w.isAlive) {
-  console.log(`${m.name} Wins!`);
+
+function battle() {
+  m.attack(w);
+  if (checkDeath(m, w)) 
+    return true;
+  if (w.rage >= 30) {
+  w.powerStrike(m);
 } else {
-  console.log(`${w.name} Wins!`);
+  w.attack(m);
+  }
+  if (checkDeath(w, m))
+    return true;
+  return false;
+}
+function checkDeath(attacker, defender) {
+  if (!defender.isAlive) {
+    console.log(`${attacker.name} Wins!`);
+    return true;
+  }
+  return false;
 }
