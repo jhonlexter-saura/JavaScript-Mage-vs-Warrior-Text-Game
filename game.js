@@ -1,4 +1,4 @@
-function log(message, color = "black") {
+function log(message, color = "white") {
   const output = document.getElementById("output");
   output.innerHTML += `<span style="color:${color}">${message}</span><br>`;
 }
@@ -18,7 +18,7 @@ class Hero {
       this.health = 0;
       this.isAlive = false;
     }
-    log(`${this.name} took ${amount} damage!. Health: ${this.health}/${this.maxHealth}.`);
+    log(`${this.name} took ${amount} damage!. Health: ↓${this.health}/${this.maxHealth}.`);
   }
   
   attack(target) {
@@ -30,7 +30,7 @@ class Hero {
       log(`${target.name} is already dead!`);
       return;
     }
-    (`${this.name} attacks ${target.name}!`);
+    log(`${this.name} attacks ${target.name}!`);
     target.takeDamage(this.attackPower);
   }
   
@@ -40,7 +40,7 @@ class Hero {
       return
     }
     this.health = Math.min(this.health + amount, this.maxHealth);
-    (`${this.name} healed! Health: ${this.health}/${this.maxHealth}`);
+    log(`${this.name} healed! Health: ↑${this.health}/${this.maxHealth}`);
   }
   
   getStatus() {
@@ -62,7 +62,7 @@ class Mage extends Hero {
       return;
     }
     if(this.mana < 10) {
-      (`${this.name} is out of mana and cannot cast spells.`);
+      log(`${this.name} is out of mana and cannot cast spells.`);
       super.attack(target);
       return;
     }
@@ -153,8 +153,15 @@ function battle() {
   if (checkDeath(w, m))
     return true;
   healChance();
+  regenMana();
   return false;
 }
+
+function regenMana() {
+  m.mana = Math.min(m.mana + 2, 100);
+  log(`${m.name} regenerated mana.\nMana: ↑${m.mana}/100`);
+}
+
 function checkDeath(attacker, defender) {
   if (!defender.isAlive) {
     log(`${attacker.name} Wins!`);

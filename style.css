@@ -1,0 +1,22 @@
+#output {
+  padding: 15px 20px;
+  background-color: #1e1e2e; /* Dark navy/charcoal */
+  color: #a6adc8;
+  border: 1px solid #313244;
+  border-radius: 8px;
+  font-family: 'Fira Code', 'Courier New', monospace;
+  font-size: 14px;
+  white-space: pre-wrap; /* Preserves line breaks from your JS strings */
+  overflow-x: auto;
+  position: relative;
+}
+
+#id::before {
+  content: "output.log";
+  display: block;
+  font-size: 10px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  color: #585b70;
+  border-bottom: 1px solid #313244;
+}
