@@ -1,3 +1,7 @@
+function log(message, color = "black") {
+  const output = document.getElementById("output");
+  output.innerHTML += `<span style="color:${color}">${message}</span><br>`;
+}
 class Hero {
   
   constructor(name, health, attackPower) {
@@ -14,29 +18,29 @@ class Hero {
       this.health = 0;
       this.isAlive = false;
     }
-    console.log(`${this.name} took ${amount} damage!. Health: ${this.health}/${this.maxHealth}.`);
+    log(`${this.name} took ${amount} damage!. Health: ${this.health}/${this.maxHealth}.`);
   }
   
   attack(target) {
     if(!this.isAlive){
-      console.log(`${this.name} is dead and cannot attack!`);
+      log(`${this.name} is dead and cannot attack!`);
       return;
     }
     if(!target.isAlive) {
-      console.log(`${target.name} is already dead!`);
+      log(`${target.name} is already dead!`);
       return;
     }
-    console.log(`${this.name} attacks ${target.name}!`);
+    (`${this.name} attacks ${target.name}!`);
     target.takeDamage(this.attackPower);
   }
   
   heal(amount) {
     if(!this.isAlive) {
-      console.log(`${this.name} is already dead and cannot be healed`);
+      (`${this.name} is already dead and cannot be healed`);
       return
     }
     this.health = Math.min(this.health + amount, this.maxHealth);
-    console.log(`${this.name} healed! Health: ${this.health}/${this.maxHealth}`);
+    (`${this.name} healed! Health: ${this.health}/${this.maxHealth}`);
   }
   
   getStatus() {
@@ -54,11 +58,11 @@ class Mage extends Hero {
   
   attack(target){
     if(!this.isAlive) {
-      console.log(`${this.name} is dead and cannot cast spells!`);
+      (`${this.name} is dead and cannot cast spells!`);
       return;
     }
     if(this.mana < 10) {
-      console.log(`${this.name} is out of mana and cannot cast spells.`);
+      (`${this.name} is out of mana and cannot cast spells.`);
       super.attack(target);
       return;
     }
@@ -66,7 +70,7 @@ class Mage extends Hero {
     const magicDamage = this.attackPower + Math.floor(Math.random() * 15);
     this.mana -= 10;
     
-    console.log(`✨ ${this.name} casts ${spell} on ${target.name}! (Mana: ${this.mana}/100)`);
+    log(`✨ ${this.name} casts ${spell} on ${target.name}! (Mana: ${this.mana}/100)`);
     target.takeDamage(magicDamage);
   }
   
@@ -86,7 +90,7 @@ class Warrior extends Hero {
   takeDamage(amount) {
     const reduceDamage = Math.max(amount - this.armor, 1);
     this.rage = Math.min(this.rage +10, 100);
-    console.log(`🛡️  ${this.name}'s armor absorbs ${amount - reduceDamage} damage! (Rage: ${this.rage}/100)`);
+    log(`🛡️  ${this.name}'s armor absorbs ${amount - reduceDamage} damage! (Rage: ${this.rage}/100)`);
     super.takeDamage(reduceDamage);
   }
   
@@ -97,7 +101,7 @@ class Warrior extends Hero {
     }
     const bonusDamage = Math.floor(this.rage/2);
     this.rage -= 30;
-    console.log(`⚔️  ${this.name} uses Power Strike on ${target.name}!`);
+    log(`⚔️  ${this.name} uses Power Strike on ${target.name}!`);
     target.takeDamage(this.attackPower + bonusDamage);
   }
   getStatus() {
@@ -112,7 +116,6 @@ while (m.isAlive && w.isAlive) {
   
   getBothStatus();
   rerollAll();
-  battle();
   if (battle()) break;
 }
 
@@ -126,8 +129,8 @@ function rerollAll() {
 }
 
 function getBothStatus() {
-  console.log(m.getStatus());
-  console.log(w.getStatus());
+  log(m.getStatus());
+  (w.getStatus());
 }
 
 function healChance() {
@@ -154,7 +157,7 @@ function battle() {
 }
 function checkDeath(attacker, defender) {
   if (!defender.isAlive) {
-    console.log(`${attacker.name} Wins!`);
+    log(`${attacker.name} Wins!`);
     return true;
   }
   return false;
